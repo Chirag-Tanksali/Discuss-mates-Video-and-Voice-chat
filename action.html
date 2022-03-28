@@ -6,40 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create or Join Meeting</title>
+    <link rel="shortcut icon" href="/public/Assets/images/Chat-27-512.webp" type="image/x-icon">
     <link rel="stylesheet" href="/public/Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/public/Assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 
 <body style="padding-top: 3.5rem;">
     <nav class="navbar navbar-expand-md fixed-top">
-        <img src="/public/Assets/images/google-meet-icon.png" class="logo" alt="">
-        <a href="#" class="navbar-brand text-dark">Google Meet</a>
+        <img style="margin-right: 10px; padding-left: 20px;" src="/public/Assets/images/Chat-27-512.webp" class="logo"
+            alt="">
+        <a href="#" class="navbar-brand text-dark"><span
+                style="color: rgb(126, 3, 120); font-size: 29px; font-weight: 700; font-family: 'Rock 3D', cursive;">E-meet : Video and Voice Call
+                Application</span></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="https://support.google.com/meet/?hl=en#topic=7306097" class="nav-link" target="_blank">At a
-                        glance</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a href="#" class="nav-link">How it Works</a>
-                </li> -->
-                <!-- <li class="nav-item">
-                    <a href="#" class="nav-link">Plan and Price</a>
-                </li> -->
+                <span>.</span>
             </ul>
             <ul class="navbar-nav mr-0">
                 <li class="nav-item sign-in display-center">
-                    <a href="#" class="nav-link">Sign in</a>
+                    <a href="#" class="nav-link" style="font-family: 'Saira Extra Condensed', sans-serif;">Sign in</a>
                 </li>
                 <li class="nav-item">
-                    <button id="a"
+                    <button id="a" style="font-family: 'Fredericka the Great', cursive;"
                         class="btn btn-outline-secondary btn-lg text-info font-weight-bold join-meeting ">Join the
                         Meeting</button>
                 </li>
                 <li class="nav-item">
                     <button class="btn btn-lg btn-info text-light font-weight-bold new-meeting"
-                        style="background-color: rgb(45, 45, 240); ">Start a Meeting</button>
+                        style="background-color: rgb(1, 1, 95); font-family: 'Fredericka the Great', cursive; ">Start a Meeting</button>
                 </li>
             </ul>
         </div>
@@ -47,15 +45,19 @@
     <main>
         <div class="jumbotron h-100 d-flex">
             <div class="container w-50">
-                <h1 style="font-size: 3rem;">Premium Video Meeting.Now it is available for free to everyone.</h1>
-                <p style="font-size: 20px;" id="d">
-                    We re-engineered the Google Meet service for secure business meetings and making it free for
+                <h1 style="font-size: 1.7rem; padding-bottom: 10px; font-weight: 450; color: rgb(255, 255, 0); background-color: rgb(46, 0, 0); font-family: 'Kaushan Script', cursive;
+                font-family: 'Kaushan Script', cursive; ">Premium Video Meeting.Built
+                    using WebRTC,Socket.IO and Javascript .Right from the landing page where users will able to host a
+                    new meeting or will be able to join in a existing meeting by using meeting code to advanced features
+                    like creating audio and video streaming,Live Chat,Sharing screen,Recording system etc! </h1>
+                <p style="font-size: 20px; color: yellow; background-color: rgb(32, 2, 2); font-family: 'Kaushan Script', cursive;" id="d">
+                    Designed the Video Meet service for Group Video and Voice call and making it free for
                     everyone to use.
                 </p>
                 <ul id="c" class="display-center justify-content-start">
                     <li style="padding: 0;">
                         <button class="btn btn-lg text-light font-weight-bold display-center new-meeting"
-                            style="background-color: #01796b;;"><span class="material-icons mr-2">video_call </span>New
+                            style="background-color: rgb(1, 1, 95);font-family: 'Fredericka the Great', cursive;"><span class="material-icons mr-2">video_call </span>New
                             Meeting</button>
                     </li>
                     <li class="pl-3">
@@ -64,7 +66,7 @@
                                 type="text" placeholder="Enter Meeting ID " style="border: none; "
                                 class="enter-code"></button>
                     </li>
-                    <li class="text-dark  font-weight-bold cursor-pointer pl-2 join-action">Join</li>
+                    <li id="join" class="text-dark  font-weight-bold cursor-pointer pl-2 join-action" style="margin-left: 30px; font-family: 'Fredericka the Great', cursive;">Join</li>
                 </ul>
             </div>
             <div class="container w-50">
@@ -72,12 +74,11 @@
             </div>
         </div>
     </main>
-    <footer class="container">
-        <h6>Learn more about <span class="learn-more text-info"> <a
-                    href="https://en.wikipedia.org/wiki/Google_Meet">Google meet</a> </span>.</h6>
+    <footer class="container" >
+        <h5 style="font-family: 'Cinzel Decorative', cursive;">Made with ❤ by <span style="font-weight: bolder; color: red;" class="learn-more text-info"> Chirag</span>.
+        </h5>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script>
         $(function () {
             // join meeting

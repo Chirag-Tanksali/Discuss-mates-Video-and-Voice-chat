@@ -35,7 +35,7 @@ li.nav-item{
     color: black !important;
 }
 #a:hover{
-    background-color: rgb(91, 79, 255);
+    background-color: rgb(119, 0, 93);
     color: black;
 }
 #c{
@@ -60,9 +60,12 @@ textarea:focus, input:focus{
     background-color: white;
 }
 
+#join:hover{
+    background-color: rgb(255, 243, 74);
+}
 /*.......... index page........... */
 .home-wrap{
-    background-color: #202123;
+    background-color: #290321;
 }
 .g-top{
     height: 89vh;
@@ -132,11 +135,11 @@ textarea:focus, input:focus{
     /* background-image: url(../images/bg.png) !important; */
 }
 video{
-    border: 1px solid gray;
-    width: 300px;
+    border: 1px solid rgb(255, 255, 255);
+    width: 300px; 
 }
 .active{
-    background-color: #00808047;
+    background-color: #470d0d47;
     border-radius: 5px;
 }
 .top-box{
