@@ -35,7 +35,7 @@ li.nav-item{
     color: black !important;
 }
 #a:hover{
-    background-color: rgb(119, 0, 93);
+    background-color: rgb(255, 224, 25);
     color: black;
 }
 #c{
@@ -44,6 +44,7 @@ li.nav-item{
 #d{
     padding-top: 7px;
 }
+
 .signin-image{
     height: 390px;
     border: 25px solid white;
@@ -62,6 +63,9 @@ textarea:focus, input:focus{
 
 #join:hover{
     background-color: rgb(255, 243, 74);
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 7px;
 }
 /*.......... index page........... */
 .home-wrap{
