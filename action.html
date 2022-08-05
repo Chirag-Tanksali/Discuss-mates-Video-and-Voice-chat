@@ -8,19 +8,21 @@
     <title>Create or Join Meeting</title>
     <link rel="shortcut icon" href="/public/Assets/images/Chat-27-512.webp" type="image/x-icon">
     <link rel="stylesheet" href="/public/Assets/css/bootstrap.min.css">
+    <!-- load css from bootstrap -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- this is a cdn link for google material icon -->
     <link rel="stylesheet" href="/public/Assets/css/style.css">
+    <!-- custom style.css -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
 </head>
 
 <body style="padding-top: 3.5rem;">
     <nav class="navbar navbar-expand-md fixed-top">
-        <img style="margin-right: 10px; padding-left: 20px;" src="/public/Assets/images/Chat-27-512.webp" class="logo"
-            alt="">
+        <img style="margin-right: 10px; padding-left: 20px;" src="/public/Assets/images/Chat-27-512.webp" class="logo" alt="">
         <a href="#" class="navbar-brand text-dark"><span
-                style="color: rgb(18, 0, 71); font-size: 29px; font-weight: 700; font-family: 'Rock 3D', cursive;">E-meet : Video and Voice Call
+                style="color: rgb(18, 0, 71); font-size: 29px; font-weight: 700; font-family: 'Rock 3D', cursive;">Discuss-mates : Video and Voice Call
                 Application</span></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
@@ -31,13 +33,11 @@
                     <a href="#" class="nav-link" style="font-family: 'Saira Extra Condensed', sans-serif;">Sign in</a>
                 </li>
                 <li class="nav-item">
-                    <button id="a" style="font-family: 'Fredericka the Great', cursive;"
-                        class="btn btn-outline-secondary btn-lg text-info font-weight-bold join-meeting ">Join the
+                    <button id="a" style="font-family: 'Fredericka the Great', cursive;" class="btn btn-outline-secondary btn-lg text-info font-weight-bold join-meeting ">Join the
                         Meeting</button>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-lg btn-info text-light font-weight-bold new-meeting" 
-                        style="background-color: rgb(1, 1, 95); font-family: 'Fredericka the Great', cursive; ">Start a Meeting</button>
+                    <button class="btn btn-lg btn-info text-light font-weight-bold new-meeting" style="background-color: rgb(1, 1, 95); font-family: 'Fredericka the Great', cursive; ">Start a Meeting</button>
                 </li>
             </ul>
         </div>
@@ -46,23 +46,18 @@
         <div class="jumbotron h-100 d-flex">
             <div class="container w-50">
                 <h1 style="font-size: 1.7rem; padding-bottom: 10px; font-weight: 450; color: rgb(27, 0, 16);  font-family: 'Kaushan Script', cursive;
-                font-family: 'Kaushan Script', cursive; ">Premium Video Meeting.Built
-                    using WebRTC,Socket.IO and Javascript .Right from the landing page where users will able to host a
-                    new meeting or will be able to join in a existing meeting by using meeting code to advanced features
-                    like creating audio and video streaming,Live Chat,Sharing screen,Recording system etc! </h1>
+                font-family: 'Kaushan Script', cursive; ">Premium Video Meeting.Built using WebRTC,Socket.IO and Javascript .Right from the landing page where users will able to host a new meeting or will be able to join in a existing meeting by using meeting code to advanced features like creating
+                    audio and video streaming,Live Chat,Sharing screen,Recording system etc! </h1>
                 <p style="font-size: 20px; color: rgb(27, 0, 16);  font-family: 'Kaushan Script', cursive;" id="d">
-                    Designed the Video Meet service for Group Video and Voice call and making it free for
-                    everyone to use.
+                    Designed the Video Meet service for Group Video and Voice call and making it free for everyone to use.
                 </p>
                 <ul id="c" class="display-center justify-content-start">
                     <li style="padding: 0;">
-                        <button class="btn btn-lg text-light font-weight-bold display-center new-meeting"
-                            style="background-color: rgb(1, 1, 95);font-family: 'Fredericka the Great', cursive;"><span class="material-icons mr-2">video_call </span>New
+                        <button class="btn btn-lg text-light font-weight-bold display-center new-meeting" style="background-color: rgb(1, 1, 95);font-family: 'Fredericka the Great', cursive;"><span class="material-icons mr-2">video_call </span>New
                             Meeting</button>
                     </li>
                     <li class="pl-3">
-                        <button class="btn btn-lg btn-outline-secondary text-dark font-weight-bold display-center"
-                            style="background-color: #ffffff;"><span class="material-icons mr-2">keyboard </span><input
+                        <button class="btn btn-lg btn-outline-secondary text-dark font-weight-bold display-center" style="background-color: #ffffff;"><span class="material-icons mr-2">keyboard </span><input
                                 type="text" placeholder="Enter Meeting ID " style="border: none; "
                                 class="enter-code"></button>
                     </li>
@@ -74,30 +69,30 @@
             </div>
         </div>
     </main>
-    <footer class="container" >
+    <footer class="container">
         <h5 style="font-family: 'Cinzel Decorative', cursive;">Made with ❤ by <span style="font-weight: bolder; color: red;" class="learn-more text-info"> Chirag</span>.
         </h5>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(function () {
+        $(function() {
             // join meeting
-            $(document).on("click", ".join-meeting", function () {
-                $(".enter-code").focus();
-            })
-            // join a meeting
-            $(document).on("click", ".join-action", function () {
-                var join_value = $('.enter-code').val();
-                if (join_value == "") {
+            $(document).on("click", ".join-meeting", function() {
                     $(".enter-code").focus();
-                    alert("Please enter your Meeting Id.");
-                    return;
-                }
-                var meetingUrl = window.location.origin + "?meetingID=" + join_value;
-                window.location.replace(meetingUrl);
-            })
-            // new meeting
-            $(document).on("click", ".new-meeting", function () {
+                })
+                // join a meeting
+            $(document).on("click", ".join-action", function() {
+                    var join_value = $('.enter-code').val();
+                    if (join_value == "") {
+                        $(".enter-code").focus();
+                        alert("Please enter your Meeting Id.");
+                        return;
+                    }
+                    var meetingUrl = window.location.origin + "?meetingID=" + join_value;
+                    window.location.replace(meetingUrl);
+                })
+                // new meeting
+            $(document).on("click", ".new-meeting", function() {
                 var eight_d_value = Math.floor(Math.random() * 100000000);
                 var meetingUrl = window.location.origin + "?meetingID=" + eight_d_value;
                 window.location.replace(meetingUrl);

@@ -2,13 +2,13 @@ const express = require("express");
 const { fstat } = require("fs");
 const path = require("path");
 var app = express();
-var server = app.listen(process.env.PORT || 3000, function () {
+var server = app.listen(process.env.PORT || 3000, function() {
     console.log("Listening on port 3000");
 });
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
 const io = require("socket.io")(server, {
-    allowEIO3: true, // false by default
+    allowEIO3: true, // false by default (must explicitly allow bcz protocol version is not supported )
 });
 app.use(express.static(path.join(__dirname, "")));
 
@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
     });
 
 
-    socket.on("disconnect", function () {
+    socket.on("disconnect", function() {
         console.log("Disconnected");
         var disUser = userConnections.find((p) => p.connectionId == socket.id);
         if (disUser) {
@@ -101,7 +101,7 @@ io.on("connection", (socket) => {
 });
 
 app.use(fileUpload());
-app.post("/attachimg", function (req, res) {
+app.post("/attachimg", function(req, res) {
     var data = req.body;
     var imageFile = req.files.zipfile;
     console.log(imageFile);
@@ -113,7 +113,7 @@ app.post("/attachimg", function (req, res) {
 
     imageFile.mv(
         "public/attachment/" + data.meeting_id + "/" + imageFile.name,
-        function (error) {
+        function(error) {
             if (error) {
                 console.log("couldn't upload the image file , error: ", error);
             } else {
@@ -122,4 +122,3 @@ app.post("/attachimg", function (req, res) {
         }
     );
 });
-

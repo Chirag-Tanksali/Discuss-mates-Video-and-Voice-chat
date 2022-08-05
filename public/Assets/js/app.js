@@ -1,4 +1,4 @@
-var AppProcess = (function () {
+var AppProcess = (function() {
     var peers_connection_ids = [];
     var peers_connection = [];
     var remote_vid_stream = [];
@@ -22,8 +22,9 @@ var AppProcess = (function () {
         eventProcess();
         local_div = document.getElementById("locaVideoPlayer");
     }
+
     function eventProcess() {
-        $("#miceMuteUnmute").on("click", async function () {
+        $("#miceMuteUnmute").on("click", async function() {
             if (!audio) {
                 await loadAudio();
             }
@@ -46,14 +47,14 @@ var AppProcess = (function () {
             }
             isAudioMute = !isAudioMute;
         });
-        $("#videoCamOnOff").on("click", async function () {
+        $("#videoCamOnOff").on("click", async function() {
             if (video_st == video_states.Camera) {
                 await videoProcess(video_states.None);
             } else {
                 await videoProcess(video_states.Camera);
             }
         });
-        $("#ScreenShareOnOf").on("click", async function () {
+        $("#ScreenShareOnOf").on("click", async function() {
             if (video_st == video_states.ScreenShare) {
                 await videoProcess(video_states.None);
             } else {
@@ -97,6 +98,7 @@ var AppProcess = (function () {
             }
         }
     }
+
     function removeMediaSenders(rtp_senders) {
         for (var con_id in peers_connection_ids) {
             if (rtp_senders[con_id] && connection_status(peers_connection[con_id])) {
@@ -105,6 +107,7 @@ var AppProcess = (function () {
             }
         }
     }
+
     function removeVideoStream(rtp_vid_senders) {
         if (videoCamTrack) {
             videoCamTrack.stop();
@@ -185,8 +188,7 @@ var AppProcess = (function () {
         }
     }
     var iceConfiguration = {
-        iceServers: [
-            {
+        iceServers: [{
                 urls: "stun:stun.l.google.com:19302",
             },
             {
@@ -196,15 +198,15 @@ var AppProcess = (function () {
     };
 
 
-    
+
 
     async function setConnection(connid) {
         var connection = new RTCPeerConnection(iceConfiguration);
 
-        connection.onnegotiationneeded = async function (event) {
+        connection.onnegotiationneeded = async function(event) {
             await setOffer(connid);
         };
-        connection.onicecandidate = function (event) {
+        connection.onicecandidate = function(event) {
             if (event.candidate) {
                 serverProcess(
                     JSON.stringify({ icecandidate: event.candidate }),
@@ -212,7 +214,7 @@ var AppProcess = (function () {
                 );
             }
         };
-        connection.ontrack = function (event) {
+        connection.ontrack = function(event) {
             if (!remote_vid_stream[connid]) {
                 remote_vid_stream[connid] = new MediaStream();
             }
@@ -266,6 +268,7 @@ var AppProcess = (function () {
             connid
         );
     }
+
     async function SDPProcess(message, from_connid) {
         message = JSON.parse(message);
         if (message.answer) {
@@ -320,24 +323,29 @@ var AppProcess = (function () {
         }
     }
     return {
-        setNewConnection: async function (connid) {
+        setNewConnection: async function(connid) {
             await setConnection(connid);
         },
-        init: async function (SDP_function, my_connid) {
+        init: async function(SDP_function, my_connid) {
             await _init(SDP_function, my_connid);
         },
-        processClientFunc: async function (data, from_connid) {
+        processClientFunc: async function(data, from_connid) {
             await SDPProcess(data, from_connid);
         },
-        closeConnectionCall: async function (connid) {
+        closeConnectionCall: async function(connid) {
             await closeConnection(connid);
         },
     };
 })();
-var MyApp = (function () {
+
+
+
+
+var MyApp = (function() {
     var socket = null;
     var user_id = "";
     var meeting_id = "";
+
     function init(uid, mid) {
         user_id = uid;
         meeting_id = mid;
@@ -351,7 +359,7 @@ var MyApp = (function () {
     function event_process_for_signaling_server() {
         socket = io.connect();
 
-        var SDP_function = function (data, to_connid) {
+        var SDP_function = function(data, to_connid) {
             socket.emit("SDPProcess", {
                 message: data,
                 to_connid: to_connid,
@@ -368,18 +376,18 @@ var MyApp = (function () {
                 }
             }
         });
-        socket.on("inform_other_about_disconnected_user", function (data) {
+        socket.on("inform_other_about_disconnected_user", function(data) {
             $("#" + data.connId).remove();
             $(".participant-count").text(data.uNumber);
             $("#participant_" + data.connId + "").remove();
             AppProcess.closeConnectionCall(data.connId);
         });
-        socket.on("inform_others_about_me", function (data) {
+        socket.on("inform_others_about_me", function(data) {
             addUser(data.other_user_id, data.connId, data.userNumber);
 
             AppProcess.setNewConnection(data.connId);
         });
-        socket.on("showFileMessage", function (data) {
+        socket.on("showFileMessage", function(data) {
             var num_of_att = $(".left-align").length;
             var added_mar = num_of_att * 10;
             var mar_top = "-" + (135 + added_mar);
@@ -402,7 +410,7 @@ var MyApp = (function () {
                 data.fileName +
                 "</a></div></div><br/>";
         });
-        socket.on("inform_me_about_other_user", function (other_users) {
+        socket.on("inform_me_about_other_user", function(other_users) {
             var userNumber = other_users.length;
             var userNumb = userNumber + 1;
             if (other_users) {
@@ -416,10 +424,10 @@ var MyApp = (function () {
                 }
             }
         });
-        socket.on("SDPProcess", async function (data) {
+        socket.on("SDPProcess", async function(data) {
             await AppProcess.processClientFunc(data.message, data.from_connid);
         });
-        socket.on("showChatMessage", function (data) {
+        socket.on("showChatMessage", function(data) {
             var time = new Date();
             var lTime = time.toLocaleString("en-US", {
                 hour: "numeric",
@@ -437,8 +445,9 @@ var MyApp = (function () {
             $("#messages").append(div);
         });
     }
+
     function eventHandeling() {
-        $("#btnsend").on("click", function () {
+        $("#btnsend").on("click", function() {
             var msgData = $("#msgbox").val();
             socket.emit("sendMessage", msgData);
             var time = new Date();
@@ -462,7 +471,7 @@ var MyApp = (function () {
         var url = window.location.href;
         $(".meeting_url").text(url);
 
-        $("#divUsers").on("dblclick", "video", function () {
+        $("#divUsers").on("dblclick", "video", function() {
             this.requestFullscreen();
         });
     }
@@ -484,36 +493,36 @@ var MyApp = (function () {
         );
         $(".participant-count").text(userNum);
     }
-    $(document).on("click", ".people-heading", function () {
+    $(document).on("click", ".people-heading", function() {
         $(".in-call-wrap-up").show(300);
         $(".chat-show-wrap").hide(300);
         $(this).addClass("active");
         $(".chat-heading").removeClass("active");
     });
-    $(document).on("click", ".chat-heading", function () {
+    $(document).on("click", ".chat-heading", function() {
         $(".in-call-wrap-up").hide(300);
         $(".chat-show-wrap").show(300);
         $(this).addClass("active");
         $(".people-heading").removeClass("active");
     });
-    $(document).on("click", ".meeting-heading-cross", function () {
+    $(document).on("click", ".meeting-heading-cross", function() {
         $(".g-right-details-wrap").hide(300);
     });
-    $(document).on("click", ".top-left-participant-wrap", function () {
+    $(document).on("click", ".top-left-participant-wrap", function() {
         $(".people-heading").addClass("active");
         $(".chat-heading").removeClass("active");
         $(".g-right-details-wrap").show(300);
         $(".in-call-wrap-up").show(300);
         $(".chat-show-wrap").hide(300);
     });
-    $(document).on("click", ".top-left-chat-wrap", function () {
+    $(document).on("click", ".top-left-chat-wrap", function() {
         $(".people-heading").removeClass("active");
         $(".chat-heading").addClass("active");
         $(".g-right-details-wrap").show(300);
         $(".in-call-wrap-up").hide(300);
         $(".chat-show-wrap").show(300);
     });
-    $(document).on("click", ".end-call-wrap", function () {
+    $(document).on("click", ".end-call-wrap", function() {
         $(".top-box-show")
             .css({
                 display: "block",
@@ -522,49 +531,49 @@ var MyApp = (function () {
                 '<div class="top-box align-vertical-middle profile-dialogue-show"> <h4 class="mt-3" style="text-align:center;color:white;">Leave Meeting</h4> <hr> <div class="call-leave-cancel-action d-flex justify-content-center align-items-center w-100"> <a href="/action.html"><button class="call-leave-action btn btn-danger mr-5">Leave</button></a> <button class="call-cancel-action btn btn-secondary">Cancel</button> </div> </div>'
             );
     });
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = new Array();
         container.push($(".top-box-show"));
-        $.each(container, function (key, value) {
+        $.each(container, function(key, value) {
             if (!$(value).is(e.target) && $(value).has(e.target).length == 0) {
                 $(value).empty();
             }
         });
     });
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
         var container = new Array();
         container.push($(".g-details"));
         container.push($(".g-right-details-wrap"));
-        $.each(container, function (key, value) {
+        $.each(container, function(key, value) {
             if (!$(value).is(e.target) && $(value).has(e.target).length == 0) {
                 $(value).hide(300);
             }
         });
     });
-    $(document).on("click", ".call-cancel-action", function () {
+    $(document).on("click", ".call-cancel-action", function() {
         $(".top-box-show").html("");
     });
-    $(document).on("click", ".copy_info", function () {
+    $(document).on("click", ".copy_info", function() {
         var $temp = $("<input>");
         $("body").append($temp);
         $temp.val($(".meeting_url").text()).select();
         document.execCommand("copy");
         $temp.remove();
         $(".link-conf").show();
-        setTimeout(function () {
+        setTimeout(function() {
             $(".link-conf").hide();
         }, 3000);
     });
-    $(document).on("click", ".meeting-details-button", function () {
+    $(document).on("click", ".meeting-details-button", function() {
         $(".g-details").slideDown(300);
     });
-    $(document).on("click", ".g-details-heading-attachment", function () {
+    $(document).on("click", ".g-details-heading-attachment", function() {
         $(".g-details-heading-show").hide();
         $(".g-details-heading-show-attachment").show();
         $(this).addClass("active");
         $(".g-details-heading-detail").removeClass("active");
     });
-    $(document).on("click", ".g-details-heading-detail", function () {
+    $(document).on("click", ".g-details-heading-detail", function() {
         $(".g-details-heading-show").show();
         $(".g-details-heading-show-attachment").hide();
         $(this).addClass("active");
@@ -572,12 +581,12 @@ var MyApp = (function () {
     });
     var base_url = window.location.origin;
 
-    $(document).on("change", ".custom-file-input", function () {
+    $(document).on("change", ".custom-file-input", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-    $(document).on("click", ".share-attach", function (e) {
+    $(document).on("click", ".share-attach", function(e) {
         e.preventDefault();
         var att_img = $("#customFile").prop("files")[0];
         var formData = new FormData();
@@ -591,10 +600,10 @@ var MyApp = (function () {
             data: formData,
             contentType: false,
             processData: false,
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
             },
-            error: function () {
+            error: function() {
                 console.log("error");
             },
         });
@@ -619,18 +628,18 @@ var MyApp = (function () {
             fileName: attachFileName,
         });
     });
-    $(document).on("click", ".option-icon", function () {
+    $(document).on("click", ".option-icon", function() {
         $(".recording-show").toggle(300);
     });
 
-    $(document).on("click", ".start-record", function () {
+    $(document).on("click", ".start-record", function() {
         $(this)
             .removeClass()
             .addClass("stop-record btn-danger text-dark")
             .text("Stop Recording");
         startRecording();
     });
-    $(document).on("click", ".stop-record", function () {
+    $(document).on("click", ".stop-record", function() {
         $(this)
             .removeClass()
             .addClass("start-record btn-dark text-danger")
@@ -670,7 +679,7 @@ var MyApp = (function () {
         ]);
         mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.start();
-        mediaRecorder.onstop = function (e) {
+        mediaRecorder.onstop = function(e) {
             var clipName = prompt("Enter a name for your recording");
             stream.getTracks().forEach((track) => track.stop());
             const blob = new Blob(chunks, {
@@ -688,15 +697,15 @@ var MyApp = (function () {
                 window.URL.revokeObjectURL(url);
             }, 100);
         };
-        mediaRecorder.ondataavailable = function (e) {
+        mediaRecorder.ondataavailable = function(e) {
             chunks.push(e.data);
         };
     }
-   
+
 
     return {
-        _init: function (uid, mid) {
+        _init: function(uid, mid) {
             init(uid, mid);
         },
     };
-})();
+})(); //() invoked function immediately
